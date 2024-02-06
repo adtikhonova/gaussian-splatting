@@ -94,6 +94,23 @@ def render(viewpoint_camera, pc : GaussianModel, pipe, bg_color : torch.Tensor, 
 
     # Those Gaussians that were frustum culled or had a radius of 0 were not visible.
     # They will be excluded from value updates used in the splitting criteria.
+
+    # to debug initial gaussian pcd
+    
+    # colors = torch.ones((9112,3), device=opacity.device)
+    # opacity*=10
+    # import cv2
+    # import numpy as np
+    # rendered_image_debug, radii_debug = rasterizer(
+    #         means3D = means3D,
+    #         means2D = means2D,
+    #         shs = None,
+    #         colors_precomp = colors,
+    #         opacities = opacity,
+    #         scales = scales * 0.1,
+    #         rotations = rotations,
+    #         cov3D_precomp = cov3D_precomp)
+    # cv2.imwrite('test_3001-debug2.png', (255*rendered_image_debug.detach().cpu().permute(1,2,0).numpy()).astype(np.uint8))
     return {"render": rendered_image,
             "viewspace_points": screenspace_points,
             "visibility_filter" : radii > 0,
